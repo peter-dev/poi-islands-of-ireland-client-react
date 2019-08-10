@@ -1,36 +1,60 @@
 import React, {Component} from 'react';
+import {Link, withRouter} from 'react-router-dom';
 import {Menu} from 'semantic-ui-react';
-import {Link} from 'react-router-dom'
+import ApiService from '../../service/apiservice';
 
-export default class DefaultHeader extends Component {
+
+class DefaultHeader extends Component {
     state = {};
 
     handleItemClick = (e, {name}) => this.setState({activeItem: name});
+    handleLogout = () => {
+        ApiService.logout(() => {
+            this.setState({activeItem: 'login'});
+            this.props.history.push('/');
+        })
+    };
 
     render() {
         const {activeItem} = this.state;
-
         return (
             <Menu>
                 <Menu.Item header as={Link} to='/'
                            name='home'
                            content='POI'
                 />
-                <Menu.Menu position='right'>
-                    <Menu.Item as={Link} to='/login'
-                               name='login'
-                               active={activeItem === 'login'}
-                               content='Login'
-                               onClick={this.handleItemClick}
-                    />
-                    <Menu.Item as={Link} to='/signup'
-                               name='signup'
-                               active={activeItem === 'signup'}
-                               content='Signup'
-                               onClick={this.handleItemClick}
-                    />
-                </Menu.Menu>
+                {ApiService.isLoggedIn() === false
+                    ? <Menu.Menu position='right'>
+                        <Menu.Item as={Link} to='/login'
+                                   name='login'
+                                   active={activeItem !== 'signup'}
+                                   content='Login'
+                                   onClick={this.handleItemClick}
+                        />
+                        <Menu.Item as={Link} to='/signup'
+                                   name='signup'
+                                   active={activeItem === 'signup'}
+                                   content='Signup'
+                                   onClick={this.handleItemClick}
+                        />
+                    </Menu.Menu>
+                    : <Menu.Menu position='right'>
+                        <Menu.Item as={Link} to='/'
+                                   name='dashboard'
+                                   active
+                                   content='Dashboard'
+                                   onClick={this.handleItemClick}
+                        />
+                        <Menu.Item name='logout'
+                                   content='Logout'
+                                   onClick={this.handleLogout}
+                        />
+                    </Menu.Menu>
+                }
+
             </Menu>
         )
     }
 }
+
+export default withRouter(DefaultHeader);

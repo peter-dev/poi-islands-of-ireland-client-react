@@ -4,9 +4,11 @@ import {BrowserRouter, Route, Switch} from "react-router-dom";
 import 'semantic-ui-css/semantic.min.css'
 import {Container} from 'semantic-ui-react';
 import App from './App';
+import PrivateRoute from './components/privateroute';
 import NotFound from './components/notfound';
 import DefaultHeader from '../src/components/header';
 import LoginForm from './components/login';
+
 import * as serviceWorker from './serviceWorker';
 
 
@@ -18,8 +20,9 @@ class Router extends Component {
                 <Container>
                     <DefaultHeader/>
                     <Switch>
+                        <PrivateRoute exact path='/' component={App} />
                         <Route path='/login' component={LoginForm}/>
-                        <Route exact path='/' component={App}/>
+                        {/*<Route exact path='/' component={App}/>*/}
                         <Route component={NotFound}/>
                     </Switch>
                 </Container>

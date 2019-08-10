@@ -1,7 +1,7 @@
-import React, {Component} from "react";
-import {withRouter} from "react-router-dom";
+import React, {Component} from 'react';
+import {withRouter} from 'react-router-dom';
 import {Segment, Form, Message} from 'semantic-ui-react';
-import ApiService from "../../service/apiservice";
+import ApiService from '../../service/apiservice';
 
 class LoginForm extends Component {
     state = {email: '', password: '', error: ''};
@@ -12,7 +12,6 @@ class LoginForm extends Component {
         await ApiService.login(this.state.email, this.state.password,
             () => {
                 this.setState({email: '', password: '', error: ''});
-                // TODO redirect to dashboard
                 this.props.history.push('/');
             },
             (message) => {

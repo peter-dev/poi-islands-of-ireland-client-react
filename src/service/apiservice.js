@@ -53,8 +53,8 @@ class ApiService {
         callback();
     }
 
-    isAuthenticate() {
-        return this.isAuthenticate();
+    isLoggedIn() {
+        return this.isAuthenticated;
     }
 
 }
