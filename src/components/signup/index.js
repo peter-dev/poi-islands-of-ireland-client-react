@@ -4,15 +4,15 @@ import {Segment, Form} from 'semantic-ui-react';
 import ErrorMessage from '../message';
 import ApiService from '../../service/apiservice';
 
-class LoginForm extends Component {
-    state = {email: 'marge@simpson.com', password: 'secret', error: ''};
+class SignupForm extends Component {
+    state = {email: '', password: '', firstName: '', lastName: '', error: ''};
 
     handleChange = (e, {name, value}) => this.setState({[name]: value});
 
     handleSubmit = async () => {
-        await ApiService.login(this.state.email, this.state.password,
+        await ApiService.signup(this.state.email, this.state.password, this.state.firstName, this.state.lastName,
             () => {
-                this.setState({email: '', password: '', error: ''});
+                this.setState({email: '', password: '', firstName: '', lastName: '', error: ''});
                 this.props.history.push('/');
             },
             (message) => {
@@ -22,10 +22,26 @@ class LoginForm extends Component {
     };
 
     render() {
-        const {email, password, error} = this.state;
+        const {email, password, firstName, lastName, error} = this.state;
         return (
             <Segment>
                 <Form error={error !== ''} onSubmit={this.handleSubmit}>
+                    <Form.Group widths='equal'>
+                        <Form.Input
+                            required
+                            label='First Name'
+                            placeholder='First Name'
+                            name='firstName'
+                            value={firstName}
+                            onChange={this.handleChange}/>
+                        <Form.Input
+                            required
+                            label='Last Name'
+                            placeholder='Last Name'
+                            name='lastName'
+                            value={lastName}
+                            onChange={this.handleChange}/>
+                    </Form.Group>
                     <Form.Input icon='user' iconPosition='left'
                         required
                         label='Email'
@@ -50,4 +66,4 @@ class LoginForm extends Component {
     }
 }
 
-export default withRouter(LoginForm);
+export default withRouter(SignupForm);

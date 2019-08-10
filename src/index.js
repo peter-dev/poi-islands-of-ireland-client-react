@@ -6,8 +6,9 @@ import {Container} from 'semantic-ui-react';
 import App from './App';
 import PrivateRoute from './components/privateroute';
 import NotFound from './components/notfound';
-import DefaultHeader from '../src/components/header';
+import DefaultHeader from './components/header';
 import LoginForm from './components/login';
+import SignupForm from './components/signup';
 
 import * as serviceWorker from './serviceWorker';
 
@@ -22,7 +23,7 @@ class Router extends Component {
                     <Switch>
                         <PrivateRoute exact path='/' component={App} />
                         <Route path='/login' component={LoginForm}/>
-                        {/*<Route exact path='/' component={App}/>*/}
+                        <Route path='/signup' component={SignupForm}/>
                         <Route component={NotFound}/>
                     </Switch>
                 </Container>
