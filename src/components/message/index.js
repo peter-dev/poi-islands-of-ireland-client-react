@@ -1,15 +1,17 @@
 import React from 'react';
 import {Message} from 'semantic-ui-react';
 
-const ErrorMessage = ({message}) => {
+const CustomMessage = ({type, header, content}) => {
 
     return (
         <Message
-            error
-            header='There was a problem...'
-            content={message}
+            error={type === 'error'}
+            warning={type === 'warning'}
+            success={type === 'success'}
+            header={header}
+            content={content}
         />
     );
 };
 
-export default ErrorMessage;
+export default CustomMessage;

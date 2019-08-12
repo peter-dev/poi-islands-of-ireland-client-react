@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import {Segment, Form} from 'semantic-ui-react';
-import ErrorMessage from '../message';
+import CustomMessage from '../message';
 import ApiService from '../../service/apiservice';
 
 class SignupForm extends Component {
@@ -58,7 +58,7 @@ class SignupForm extends Component {
                         value={password}
                         onChange={this.handleChange}
                     />
-                    <ErrorMessage message={error}/>
+                    <CustomMessage type='error' header='There was a problem...' message={error}/>
                     <Form.Button color='blue' content='Submit'/>
                 </Form>
             </Segment>

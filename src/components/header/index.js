@@ -3,7 +3,6 @@ import {Link, withRouter} from 'react-router-dom';
 import {Menu} from 'semantic-ui-react';
 import ApiService from '../../service/apiservice';
 
-
 class DefaultHeader extends Component {
     state = {};
 

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import {Segment, Form} from 'semantic-ui-react';
-import ErrorMessage from '../message';
+import CustomMessage from '../message';
 import ApiService from '../../service/apiservice';
 
 class LoginForm extends Component {
@@ -27,22 +27,22 @@ class LoginForm extends Component {
             <Segment>
                 <Form error={error !== ''} onSubmit={this.handleSubmit}>
                     <Form.Input icon='user' iconPosition='left'
-                        required
-                        label='Email'
-                        placeholder='Email'
-                        name='email'
-                        value={email}
-                        onChange={this.handleChange}/>
+                                required
+                                label='Email'
+                                placeholder='Email'
+                                name='email'
+                                value={email}
+                                onChange={this.handleChange}/>
                     <Form.Input icon='lock' iconPosition='left'
-                        required
-                        label='Password'
-                        placeholder='Password'
-                        type='password'
-                        name='password'
-                        value={password}
-                        onChange={this.handleChange}
+                                required
+                                label='Password'
+                                placeholder='Password'
+                                type='password'
+                                name='password'
+                                value={password}
+                                onChange={this.handleChange}
                     />
-                    <ErrorMessage message={error}/>
+                    <CustomMessage type='error' header='There was a problem...' message={error}/>
                     <Form.Button color='blue' content='Submit'/>
                 </Form>
             </Segment>
