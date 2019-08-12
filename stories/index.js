@@ -9,6 +9,7 @@ import Header from '../src/components/header/';
 import LoginForm from '../src/components/login';
 import SignupForm from '../src/components/signup';
 import IslandDetails from '../src/components/island';
+import Map from '../src/components/map';
 
 const island = {
     "location": {
@@ -75,5 +76,15 @@ storiesOf('POI App/Signup Form', module)
     ));
 
 storiesOf('POI App/Island Details', module)
-    .add('with ratings', () => (<IslandDetails island={island} ratings={ratings} />))
-    .add('without ratings', () => (<IslandDetails island={island} ratings={[]} />));
+    .add('with ratings', () => (<IslandDetails island={island} ratings={ratings}/>))
+    .add('without ratings', () => (<IslandDetails island={island} ratings={[]}/>));
+
+storiesOf('POI App/Island Map', module)
+    .add('default', () => (
+        <Map
+            googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+            loadingElement={<div style={{height: `100%`}}/>}
+            location={island.location}
+            containerElement={<div style={{height: `400px`}}/>}
+            mapElement={<div style={{height: `100%`}}/>}
+        />));

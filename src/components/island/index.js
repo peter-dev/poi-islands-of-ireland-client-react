@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Segment, Item, Icon} from 'semantic-ui-react'
+import React from 'react';
+import {Segment, Item, Icon} from 'semantic-ui-react';
 import {calculateAverageRating} from '../../utils/utility';
 
 const IslandDetails = ({island, ratings}) => {
@@ -16,9 +16,7 @@ const IslandDetails = ({island, ratings}) => {
                                 : <Icon name='check' color='red'/>
                             }
                             <span>{ratings.length} Votes</span>
-                            {avgRating > -1
-                                ? <span>{avgRating} Average Rating</span>
-                                : null}
+                            {avgRating > -1 && <span>{avgRating} Average Rating</span>}
                         </Item.Meta>
                         <Item.Description>
                             {island.description}
