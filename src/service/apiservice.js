@@ -4,6 +4,9 @@ class ApiService {
     constructor() {
         this.baseUrl = 'http://localhost:3000';
         this.usersEndpoint = this.baseUrl + '/api/users';
+        this.regionsEndpoint = this.baseUrl + '/api/regions';
+        this.islandsByRegionEndpoint = this.baseUrl + '/api/regions/{id}/islands';
+        this.ratingsByIslandEndpoint = this.baseUrl + '/api/islands/{id}/ratings';
         this.isAuthenticated = false;
         this.headers = {
             Authorization: ''
@@ -47,7 +50,6 @@ class ApiService {
         }
     }
 
-
     async login(email, password, callback, errorcallback) {
         const user = {
             firstName: 'n/a',
@@ -83,6 +85,54 @@ class ApiService {
 
     isLoggedIn() {
         return this.isAuthenticated;
+    }
+
+    async getRegions() {
+        const getRequest = {
+            method: 'get',
+            url: this.regionsEndpoint,
+            headers: this.headers
+        };
+        try {
+            const response = await axios(getRequest);
+            console.log('Response Regions: ' + JSON.stringify(response.data));
+            return response.data;
+        } catch (err) {
+            const errResponse = await err.response;
+            console.log('Error: ' + JSON.stringify(errResponse.data));
+        }
+    }
+
+    async getIslandsByRegion(regionId) {
+        const getRequest = {
+            method: 'get',
+            url: this.islandsByRegionEndpoint.replace('{id}', regionId),
+            headers: this.headers
+        };
+        try {
+            const response = await axios(getRequest);
+            console.log('Response Islands by Region: ' + JSON.stringify(response.data));
+            return response.data;
+        } catch (err) {
+            const errResponse = await err.response;
+            console.log('Error: ' + JSON.stringify(errResponse.data));
+        }
+    }
+
+    async getRatingsByIsland(islandId) {
+        const getRequest = {
+            method: 'get',
+            url: this.ratingsByIslandEndpoint.replace('{id}', islandId),
+            headers: this.headers
+        };
+        try {
+            const response = await axios(getRequest);
+            console.log('Response Ratings by Island: ' + JSON.stringify(response.data));
+            return response.data;
+        } catch (err) {
+            const errResponse = await err.response;
+            console.log('Error: ' + JSON.stringify(errResponse.data));
+        }
     }
 
 }

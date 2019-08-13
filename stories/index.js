@@ -9,6 +9,7 @@ import Header from '../src/components/header/';
 import LoginForm from '../src/components/login';
 import SignupForm from '../src/components/signup';
 import IslandDetails from '../src/components/island';
+import SearchControls from '../src/components/searchcontrols';
 import Map from '../src/components/map';
 
 const island = {
@@ -75,11 +76,11 @@ storiesOf('POI App/Signup Form', module)
         <SignupForm/>
     ));
 
-storiesOf('POI App/Island Details', module)
+storiesOf('POI App/Island Page/Details', module)
     .add('with ratings', () => (<IslandDetails island={island} ratings={ratings}/>))
     .add('without ratings', () => (<IslandDetails island={island} ratings={[]}/>));
 
-storiesOf('POI App/Island Map', module)
+storiesOf('POI App/Island Page/Map', module)
     .add('default', () => (
         <Map
             googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
@@ -88,3 +89,24 @@ storiesOf('POI App/Island Map', module)
             containerElement={<div style={{height: `400px`}}/>}
             mapElement={<div style={{height: `100%`}}/>}
         />));
+
+storiesOf("POI App/Island Page/Search Controls", module)
+    .add('disable island dropdown', () => {
+        const regions = [
+            {text: 'North East', value: '5d52f1dcb0256f1e7ed39638'},
+            {text: 'East Coast', value: 'd52f1dcb0256f1e7ed39639'},
+            {text: 'South Coast', value: '5d52f1dcb0256f1e7ed3963a'},
+        ];
+        return <SearchControls regions={regions} islands={[]} handleSelection={action('Search criteria changes')}/>
+    });
+
+storiesOf("POI App/Island Page/Search Controls", module)
+    .add('enabled island dropdown', () => {
+        const regions = [
+            {text: 'North East', value: '5d52f1dcb0256f1e7ed39638'}
+        ];
+        const islands = [
+            {text: 'Lough Foyle Island', value: '5d52f1dcb0256f1e7ed3963d'}
+        ];
+        return <SearchControls regions={regions} islands={islands} handleSelection={action('Search criteria changes')}/>
+    });
