@@ -9,6 +9,7 @@ import NotFound from './components/notfound';
 import DefaultHeader from './components/header';
 import LoginForm from './components/login';
 import SignupForm from './components/signup';
+import AddIslandForm from './components/add'
 
 import * as serviceWorker from './serviceWorker';
 
@@ -22,6 +23,7 @@ class Router extends Component {
                     <DefaultHeader/>
                     <Switch>
                         <PrivateRoute exact path='/' component={App} />
+                        <PrivateRoute path='/add' component={AddIslandForm}/>
                         <Route path='/login' component={LoginForm}/>
                         <Route path='/signup' component={SignupForm}/>
                         <Route component={NotFound}/>

@@ -15,21 +15,25 @@ class App extends Component {
     };
 
     componentDidMount = async () => {
+        // fetch list of available regions from API when component is created
         const response = await ApiService.getRegions();
         this.setState({dataRegions: response});
     };
 
     getIslandsById = async (id) => {
+        // fetch list of available islands by region id
         const response = await ApiService.getIslandsByRegion(id);
         this.setState({dataIslands: response});
     };
 
     getRatingsById = async (id) => {
+        // fetch list of available rating by island id
         const response = await ApiService.getRatingsByIsland(id);
         this.setState({dataRatings: response});
     };
 
     handleChange = async (name, value) => {
+        // callback method for SearchControls component, update state and fetch data from API
         this.setState({[name]: value});
         name === 'region' && this.getIslandsById(value);
         name === 'island' && this.getRatingsById(value);
@@ -50,6 +54,7 @@ class App extends Component {
             container['value'] = island._id;
             return container;
         });
+        // check if island is set, find island entry by id or assign 'undefined'
         const selectedIsland = this.state.island !== '' ? this.state.dataIslands.find(island => island._id === this.state.island) : undefined;
         const ratings = this.state.dataRatings;
         return (

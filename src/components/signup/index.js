@@ -10,6 +10,7 @@ class SignupForm extends Component {
     handleChange = (e, {name, value}) => this.setState({[name]: value});
 
     handleSubmit = async () => {
+        // handle form submission, redirect to home page on success or display error message
         await ApiService.signup(this.state.email, this.state.password, this.state.firstName, this.state.lastName,
             () => {
                 this.setState({email: '', password: '', firstName: '', lastName: '', error: ''});
@@ -22,6 +23,7 @@ class SignupForm extends Component {
     };
 
     render() {
+        // set form error status to true and display message if error content is available
         const {email, password, firstName, lastName, error} = this.state;
         return (
             <Segment>
@@ -43,22 +45,23 @@ class SignupForm extends Component {
                             onChange={this.handleChange}/>
                     </Form.Group>
                     <Form.Input icon='user' iconPosition='left'
-                        required
-                        label='Email'
-                        placeholder='Email'
-                        name='email'
-                        value={email}
-                        onChange={this.handleChange}/>
+                                required
+                                label='Email'
+                                placeholder='Email'
+                                type='email'
+                                name='email'
+                                value={email}
+                                onChange={this.handleChange}/>
                     <Form.Input icon='lock' iconPosition='left'
-                        required
-                        label='Password'
-                        placeholder='Password'
-                        type='password'
-                        name='password'
-                        value={password}
-                        onChange={this.handleChange}
+                                required
+                                label='Password'
+                                placeholder='Password'
+                                type='password'
+                                name='password'
+                                value={password}
+                                onChange={this.handleChange}
                     />
-                    <CustomMessage type='error' header='There was a problem...' message={error}/>
+                    <CustomMessage type='error' header='There was a problem...' content={error}/>
                     <Form.Button color='blue' content='Submit'/>
                 </Form>
             </Segment>

@@ -3,6 +3,7 @@ import {Segment, Item, Icon} from 'semantic-ui-react';
 import {calculateAverageRating} from '../../utils/utility';
 
 const IslandDetails = ({island, ratings}) => {
+    // compute average rating from the list of rating and render island details
     const avgRating = calculateAverageRating(ratings);
     return (
         <Segment>

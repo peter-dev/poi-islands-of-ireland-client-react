@@ -10,9 +10,10 @@ import LoginForm from '../src/components/login';
 import SignupForm from '../src/components/signup';
 import IslandDetails from '../src/components/island';
 import SearchControls from '../src/components/searchcontrols';
+import AddIslandForm from '../src/components/add';
 import Map from '../src/components/map';
 
-const island = {
+const mockIsland = {
     "location": {
         "lat": 55.19369052,
         "lng": -6.96442359
@@ -24,7 +25,13 @@ const island = {
     "createdBy": "5d519cab41ebb81840e87ac6"
 };
 
-const ratings = [
+const mockRegions = [
+    {text: 'North East', value: '5d52f1dcb0256f1e7ed39638'},
+    {text: 'East Coast', value: 'd52f1dcb0256f1e7ed39639'},
+    {text: 'South Coast', value: '5d52f1dcb0256f1e7ed3963a'},
+];
+
+const mockRatings = [
     {
         "_id": "5d519cac41ebb81840e87ad3",
         "score": 5,
@@ -77,36 +84,47 @@ storiesOf('POI App/Signup Form', module)
     ));
 
 storiesOf('POI App/Island Page/Details', module)
-    .add('with ratings', () => (<IslandDetails island={island} ratings={ratings}/>))
-    .add('without ratings', () => (<IslandDetails island={island} ratings={[]}/>));
+    .add('with ratings', () => (<IslandDetails island={mockIsland} ratings={mockRatings}/>))
+    .add('without ratings', () => (<IslandDetails island={mockIsland} ratings={[]}/>));
 
 storiesOf('POI App/Island Page/Map', module)
     .add('default', () => (
         <Map
             googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
             loadingElement={<div style={{height: `100%`}}/>}
-            location={island.location}
+            location={mockIsland.location}
             containerElement={<div style={{height: `400px`}}/>}
             mapElement={<div style={{height: `100%`}}/>}
         />));
 
 storiesOf("POI App/Island Page/Search Controls", module)
-    .add('disable island dropdown', () => {
-        const regions = [
-            {text: 'North East', value: '5d52f1dcb0256f1e7ed39638'},
-            {text: 'East Coast', value: 'd52f1dcb0256f1e7ed39639'},
-            {text: 'South Coast', value: '5d52f1dcb0256f1e7ed3963a'},
-        ];
-        return <SearchControls regions={regions} islands={[]} handleSelection={action('Search criteria changes')}/>
+    .addDecorator(story => (
+        <MemoryRouter initialEntries={['/']}>{story()}</MemoryRouter>
+    ))
+    .add('disabled island dropdown', () => {
+        return <SearchControls regions={mockRegions} islands={[]} handleSelection={action('Search criteria changes')}/>
     });
 
 storiesOf("POI App/Island Page/Search Controls", module)
+    .addDecorator(story => (
+        <MemoryRouter initialEntries={['/']}>{story()}</MemoryRouter>
+    ))
     .add('enabled island dropdown', () => {
-        const regions = [
+        const mockRegions = [
             {text: 'North East', value: '5d52f1dcb0256f1e7ed39638'}
         ];
-        const islands = [
-            {text: 'Lough Foyle Island', value: '5d52f1dcb0256f1e7ed3963d'}
+        const mockIslands = [
+            {text: 'Lough Foyle Island', value: '5d52f1dcb0256f1e7ed3963d'},
+            {text: 'River Bann Island', value: '5d52f1dcb0256f1e7ed39658'}
         ];
-        return <SearchControls regions={regions} islands={islands} handleSelection={action('Search criteria changes')}/>
+        return <SearchControls regions={mockRegions} islands={mockIslands}
+                               handleSelection={action('Search criteria changes')}/>
     });
+
+storiesOf("POI App/Add Island Form", module)
+    .addDecorator(story => (
+        <MemoryRouter initialEntries={['/']}>{story()}</MemoryRouter>
+    ))
+    .add('default', () => (
+        <AddIslandForm/>
+    ));

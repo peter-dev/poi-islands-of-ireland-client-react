@@ -7,7 +7,9 @@ class DefaultHeader extends Component {
     state = {};
 
     handleItemClick = (e, {name}) => this.setState({activeItem: name});
+
     handleLogout = () => {
+        // handle logout action, redirect to home page
         ApiService.logout(() => {
             this.setState({activeItem: 'login'});
             this.props.history.push('/');
@@ -15,6 +17,7 @@ class DefaultHeader extends Component {
     };
 
     render() {
+        // get value of currently active menu item, render different menu based on user authentication status
         const {activeItem} = this.state;
         return (
             <Menu>

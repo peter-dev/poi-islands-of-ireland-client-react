@@ -6,6 +6,7 @@ const PrivateRoute = ({component: Component, ...rest}) => {
     return (
         <Route
             {...rest}
+            // check if user is authenticated, display component or redirect to login page
             render={(props) => ApiService.isLoggedIn() === true
                 ? <Component {...props} />
                 : <Redirect to={{pathname: '/login', state: {from: props.location}}}/>

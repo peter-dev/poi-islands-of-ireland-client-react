@@ -135,6 +135,34 @@ class ApiService {
         }
     }
 
+    async addIsland(name, description, lat, lng, regionId, callback, errorcallback) {
+        const island = {
+            name: name,
+            description: description,
+            location: {
+                lat: lat,
+                lng: lng
+            }
+        };
+        const postRequest = {
+            method: 'post',
+            url: this.islandsByRegionEndpoint.replace('{id}', regionId),
+            data: island,
+            headers: this.headers
+        };
+        try {
+            const response = await axios(postRequest);
+            console.log('Response Add Island: ' + JSON.stringify(response.data));
+            if (response.status === 201) {
+               callback(response.data);
+            }
+        } catch (err) {
+            const errResponse = await err.response;
+            console.log('Error: ' + JSON.stringify(errResponse.data));
+            errorcallback(errResponse.data.message);
+        }
+    }
+
 }
 
 export default new ApiService();

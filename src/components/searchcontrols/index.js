@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
+import {Link, withRouter} from 'react-router-dom';
 import {Button, Divider, Grid, Header, Icon, Segment, Dropdown} from 'semantic-ui-react';
 
 class SearchControls extends Component {
     handleChange = (e, {name, value}) => {
+        // handle dropdown change, execute callback method from App component
         this.props.handleSelection(name, value);
     };
 
@@ -43,14 +45,13 @@ class SearchControls extends Component {
                                 <Icon name='world'/>
                                 Add New Island
                             </Header>
-                            <Button primary>Create</Button>
+                            <Button primary as={Link} to='/add'>Add POI</Button>
                         </Grid.Column>
                     </Grid.Row>
                 </Grid>
-
             </Segment>
         );
     }
 }
 
-export default SearchControls;
+export default withRouter(SearchControls);
