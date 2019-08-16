@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Segment} from 'semantic-ui-react';
 import SearchControls from './components/searchcontrols';
 import IslandDetails from './components/island';
+import CustomMessage from './components/message';
 import Map from './components/map';
 import ApiService from './service/apiservice';
 
@@ -59,6 +60,7 @@ class App extends Component {
         const ratings = this.state.dataRatings;
         return (
             <Segment>
+                {this.props.location.state && this.props.location.state.success && <CustomMessage type='success' header='Request successful...' content={this.props.location.state.success}/>}
                 <SearchControls regions={regions} islands={islands} handleSelection={this.handleChange}/>
                 {selectedIsland !== undefined && <IslandDetails island={selectedIsland} ratings={ratings}/>}
                 {selectedIsland !== undefined && <Segment>

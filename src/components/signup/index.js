@@ -3,6 +3,9 @@ import {withRouter} from 'react-router-dom';
 import {Segment, Form} from 'semantic-ui-react';
 import CustomMessage from '../message';
 import ApiService from '../../service/apiservice';
+import CustomInputText from '../form/inputext';
+import CustomInputEmail from '../form/inputemail';
+import CustomInputPassword from '../form/inputpassword';
 
 class SignupForm extends Component {
     state = {email: '', password: '', firstName: '', lastName: '', error: ''};
@@ -29,38 +32,15 @@ class SignupForm extends Component {
             <Segment>
                 <Form error={error !== ''} onSubmit={this.handleSubmit}>
                     <Form.Group widths='equal'>
-                        <Form.Input
-                            required
-                            label='First Name'
-                            placeholder='First Name'
-                            name='firstName'
-                            value={firstName}
-                            onChange={this.handleChange}/>
-                        <Form.Input
-                            required
-                            label='Last Name'
-                            placeholder='Last Name'
-                            name='lastName'
-                            value={lastName}
-                            onChange={this.handleChange}/>
+                        <CustomInputText name='firstName' label='First Name' type='text' value={firstName}
+                                         handleChange={this.handleChange}/>
+
+                        <CustomInputText name='lastName' label='Last Name' type='text' value={lastName}
+                                         handleChange={this.handleChange}/>
                     </Form.Group>
-                    <Form.Input icon='user' iconPosition='left'
-                                required
-                                label='Email'
-                                placeholder='Email'
-                                type='email'
-                                name='email'
-                                value={email}
-                                onChange={this.handleChange}/>
-                    <Form.Input icon='lock' iconPosition='left'
-                                required
-                                label='Password'
-                                placeholder='Password'
-                                type='password'
-                                name='password'
-                                value={password}
-                                onChange={this.handleChange}
-                    />
+                    <CustomInputEmail name='email' label='Email' value={email} handleChange={this.handleChange}/>
+                    <CustomInputPassword name='password' label='Password' value={password}
+                                         handleChange={this.handleChange}/>
                     <CustomMessage type='error' header='There was a problem...' content={error}/>
                     <Form.Button color='blue' content='Submit'/>
                 </Form>
