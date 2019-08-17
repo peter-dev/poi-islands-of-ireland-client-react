@@ -5,6 +5,7 @@ class ApiService {
         this.baseUrl = 'http://localhost:3000';
         this.usersEndpoint = this.baseUrl + '/api/users';
         this.regionsEndpoint = this.baseUrl + '/api/regions';
+        this.islandsEndpoint = this.baseUrl + '/api/islands/{id}';
         this.islandsByRegionEndpoint = this.baseUrl + '/api/regions/{id}/islands';
         this.ratingsByIslandEndpoint = this.baseUrl + '/api/islands/{id}/ratings';
         this.isAuthenticated = false;
@@ -135,6 +136,22 @@ class ApiService {
         }
     }
 
+    async getIslandById(islandId) {
+        const getRequest = {
+            method: 'get',
+            url: this.islandsEndpoint.replace('{id}', islandId),
+            headers: this.headers
+        };
+        try {
+            const response = await axios(getRequest);
+            console.log('Response Island by Id: ' + JSON.stringify(response.data));
+            return response.data;
+        } catch (err) {
+            const errResponse = await err.response;
+            console.log('Error: ' + JSON.stringify(errResponse.data));
+        }
+    }
+
     async addIsland(name, description, lat, lng, regionId, callback, errorcallback) {
         const island = {
             name: name,
@@ -154,7 +171,36 @@ class ApiService {
             const response = await axios(postRequest);
             console.log('Response Add Island: ' + JSON.stringify(response.data));
             if (response.status === 201) {
-               callback(response.data);
+                callback(response.data);
+            }
+        } catch (err) {
+            const errResponse = await err.response;
+            console.log('Error: ' + JSON.stringify(errResponse.data));
+            errorcallback(errResponse.data.message);
+        }
+    }
+
+    async updateIsland(name, description, lat, lng, region, islandId, callback, errorcallback) {
+        const island = {
+            name: name,
+            description: description,
+            location: {
+                lat: lat,
+                lng: lng
+            },
+            region: region
+        };
+        const putRequest = {
+            method: 'put',
+            url: this.islandsByRegionEndpoint.replace('{id}', region) + '/' + islandId,
+            data: island,
+            headers: this.headers
+        };
+        try {
+            const response = await axios(putRequest);
+            console.log('Response Update Island: ' + JSON.stringify(response.data));
+            if (response.status === 200) {
+                callback(response.data);
             }
         } catch (err) {
             const errResponse = await err.response;

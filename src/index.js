@@ -10,6 +10,7 @@ import DefaultHeader from './components/header';
 import LoginForm from './components/login';
 import SignupForm from './components/signup';
 import AddIslandForm from './components/add'
+import EditIslandForm from './components/edit';
 
 import * as serviceWorker from './serviceWorker';
 
@@ -24,6 +25,7 @@ class Router extends Component {
                     <Switch>
                         <PrivateRoute exact path='/' component={App} />
                         <PrivateRoute path='/add' component={AddIslandForm}/>
+                        <PrivateRoute path='/edit/:id' component={EditIslandForm}/>
                         <Route path='/login' component={LoginForm}/>
                         <Route path='/signup' component={SignupForm}/>
                         <Route component={NotFound}/>

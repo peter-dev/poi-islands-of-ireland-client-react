@@ -6,33 +6,36 @@ import CustomDropdown from '../form/dropdown';
 import CustomInputText from '../form/inputext';
 import CustomInputNumber from '../form/inputnumber';
 import CustomTextArea from '../form/textarea';
-import ApiService from '../../service/apiservice';
-import withDidMount from "../withdidmount";
+import withDidMount from '../withdidmount';
+import ApiService from "../../service/apiservice";
 
-class AddIslandForm extends Component {
+class EditIslandForm extends Component {
     state = {region: '', name: '', lat: '', lng: '', description: '', error: ''};
+
+    componentDidMount = async () => {
+        // fetch selected island by id from API when component is rendered
+        const response = await ApiService.getIslandById(this.props.match.params.id);
+        const {name, description, location, region} = response;
+        this.setState({region: region, name: name, description: description, lat: location.lat, lng: location.lng});
+    };
 
     handleChange = (e, {name, value}) => this.setState({[name]: value});
 
     handleSubmit = async () => {
         // handle form submission, redirect and display message on success or render error message on failure
-        // check the value of dropdown component, required doesn't work and initially it is set to empty string ''
-        if (this.state.region === '') {
-            this.setState({error: 'Invalid region (category)'});
-        } else {
-            await ApiService.addIsland(this.state.name, this.state.description, this.state.lat, this.state.lng, this.state.region,
-                (response) => {
-                    this.setState({region: '', name: '', lat: '', lng: '', description: '', error: ''});
-                    this.props.history.push({
-                        pathname: '/',
-                        state: {success: `Island '${response.name}' has been created`}
-                    })
-                },
-                (message) => {
-                    this.setState({error: message});
-                }
-            );
-        }
+        await ApiService.updateIsland(this.state.name, this.state.description, this.state.lat, this.state.lng, this.state.region, this.props.match.params.id,
+            (response) => {
+                this.setState({region: '', name: '', lat: '', lng: '', description: '', error: ''});
+                this.props.history.push({
+                    pathname: '/',
+                    state: {success: `Island '${response.name}' has been updated`}
+                })
+            },
+            (message) => {
+                this.setState({error: message});
+            }
+        );
+
     };
 
     render() {
@@ -59,11 +62,11 @@ class AddIslandForm extends Component {
                                            handleChange={this.handleChange}/>
                     </Form.Group>
                     <CustomMessage type='error' header='There was a problem...' content={error}/>
-                    <Form.Button color='blue' content='Submit'/>
+                    <Form.Button color='blue' content='Update'/>
                 </Form>
             </Segment>
         );
     }
 }
 
-export default withDidMount(withRouter(AddIslandForm));
+export default withDidMount(withRouter(EditIslandForm));

@@ -5,6 +5,7 @@ const CustomTextArea = ({name, label, value, handleChange}) => {
     return (
         <Form.TextArea
             required
+            rows={6}
             label={label}
             placeholder={label}
             name={name}
