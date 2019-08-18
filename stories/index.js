@@ -84,6 +84,9 @@ storiesOf('POI App/Signup Form', module)
     ));
 
 storiesOf('POI App/Island Page/Details', module)
+    .addDecorator(story => (
+        <MemoryRouter initialEntries={['/']}>{story()}</MemoryRouter>
+    ))
     .add('with ratings', () => (<IslandDetails island={mockIsland} ratings={mockRatings}/>))
     .add('without ratings', () => (<IslandDetails island={mockIsland} ratings={[]}/>));
 
@@ -121,6 +124,7 @@ storiesOf("POI App/Island Page/Search Controls", module)
                                handleSelection={action('Search criteria changes')}/>
     });
 
+// TODO this story is not rendering when I used custom HOC component 'withDidMount'
 storiesOf("POI App/Add Island Form", module)
     .addDecorator(story => (
         <MemoryRouter initialEntries={['/']}>{story()}</MemoryRouter>

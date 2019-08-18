@@ -1,4 +1,5 @@
 import React from 'react';
+import {withRouter} from 'react-router-dom';
 import {Segment, Item, Icon, Button} from 'semantic-ui-react';
 import {calculateAverageRating} from '../../utils/utility';
 import {Link} from "react-router-dom";
@@ -35,4 +36,4 @@ const IslandDetails = ({island, ratings}) => {
     );
 };
 
-export default IslandDetails;
+export default withRouter(IslandDetails);
